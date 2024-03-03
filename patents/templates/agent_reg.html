@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Registration Form</title>
+<style>
+  body {
+  font-family:'Poppins', sans-serif ;
+  margin: 0;
+  padding: 0;
+  font-size: 23px;
+  height: 200px;
+  background-color: #ffffff;
+  background-size: cover; 
+  background-repeat: no-repeat;
+    }
+
+
+h2 {
+  text-align: center;
+  margin-top: 30px;
+  color: #000;
+  
+  font-family: 'Poppins', sans-serif; 
+  font-size: 45px;
+}
+
+form {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 15px;
+  font-family:'Poppins', sans-serif; 
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+  box-shadow: 0 0 40px rgba(208, 207, 210, 0.6);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+
+.text {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0 0 40px rgba(208, 207, 210, 0.6);
+}
+.email {
+  width: 100%;
+  padding: 8px;
+  /* margin-bottom: 10px; */
+  margin-top: 0px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 0 40px rgba(208, 207, 210, 0.6);
+}
+.tel {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0 0 40px rgba(208, 207, 210, 0.6);
+}
+.password {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0 0 40px rgba(208, 207, 210, 0.6);
+}
+
+.button-like-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007BFF; /* You can customize the background color */
+  color: #ffffff; /* You can customize the text color */
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.button-like-link:hover {
+  background-color: #0056b3; /* You can customize the hover background color */
+}
+
+.shpass {
+  font-size: 1px !important;
+}
+
+.valid {
+display: inline-block;
+width: 80px; /* Adjust as needed */
+text-align: right;
+margin-right: 10px;
+}
+</style>
+</head>
+<body>
+<h2 class="container">Agent Registration </h2>
+<form action="{% url 'agent_signup' %}" method="POST" onsubmit="return validateForm()">
+    {% csrf_token %}
+  <label for="username">Username:</label>
+  <input type="text" class="text" id="username" name="username" required><br>
+  <label for="gender">Gender</label>
+  <input type="radio"  class="shpass" name="gender" id="male" value="male"> Male
+  <input type="radio"  class="shpass" name="gender" id="female" value="female"> Female<br>
+
+  
+  <br><label>Mobile Number:</label>
+  <input type="tel" id="mobile" name="mobile" required class="tel"><br>
+  
+  <br><label for="email">Email:</label>
+  <input type="email" id="email" name="email" required class="email"><br>
+  
+  <br><label for="email">Patent_Agent_Key:</label>
+  <input type="AgentID" id="AgentID" name="AgentID" required class="email"><br>
+
+  <br><label for="valid" ></label>Key_valid_till:
+  <input type="date" id="birthday" name="valid" class="email"><br>
+</label>
+
+  <br><label for="password">Password:</label>
+  <input type="password" id="password" name="password" required class="password"><br>
+  <input type="checkbox" onclick="togglePassword()"> Show Password<br>
+  
+  <br><label for="confirm_password">Confirm Password:</label>
+  <input type="password" id="confirm_password" name="confirm_password" required class="password"><br>
+  <input type="checkbox" onclick="togglePasswordc()" class="shpass"> Show Password<br><br>
+  
+  
+  <div class="submit",value='done'>
+    <a href="{% url 'login' %}" class="button-like-link">Login</a>
+  </div>
+</form>
+
+<script>
+function togglePassword() {
+  var passwordField = document.getElementById("password");
+  if (passwordField.type === "password") {
+    passwordField.type = "text";
+  } else {
+    passwordField.type = "password";
+  }
+}
+
+function togglePasswordc() {
+  var passwordFieldc = document.getElementById("confirm_password");
+  if (passwordFieldc.type === "password") {
+    passwordFieldc.type = "text";
+  } else {
+    passwordFieldc.type = "password";
+  }
+}
+
+function validateForm() {
+  var mobileField = document.getElementById("mobile");
+  var mobile = mobileField.value;
+  if (mobile.length !== 10 || !/^\d{10}$/.test(mobile)) {
+    alert("Mobile number must be exactly 10 digits.");
+    mobileField.focus();
+    return false;
+  }
+  
+  var passwordField = document.getElementById("password");
+  var password = passwordField.value;
+  if (password.length < 6 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+    alert("Password must be at least 6 characters long and contain at least one letter and one number.");
+    passwordField.focus();
+    return false;
+  }
+  
+  var emailField = document.getElementById("email");
+  var email = emailField.value;
+  if (!email.includes("@")) {
+    alert("Please enter a valid email address.");
+    emailField.focus();
+    return false;
+  }
+  
+  return true;
+}
+</script>
+</body>
+</html>

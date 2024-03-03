@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Registration</title>
+    <style media="screen">
+        body {
+            background-color: (128,128,0);
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            height: 450px;
+            width: 670px;
+            background-color:(128,128,0);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 1px;
+            box-shadow: 0 0 40px rgba(208, 207, 210, 0.6);
+            padding: 0px 35px;
+            box-sizing: border-box;
+        }
+
+        form * {
+            font-family: 'Poppins', sans-serif;
+            color: #000000;
+            letter-spacing: 0.5px;
+            outline: none;
+            border: none;
+        }
+
+        form h3 {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 42px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 30px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        input {
+            display: block;
+            height: 50px;
+            width: 100%;
+            background-color: (128,128,0);
+            box-shadow: 0 0 40px rgba(208, 207, 210, 0.6);
+            border: 1px solid #ebe8e8;
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        ::placeholder {
+            color: #888888;
+        }
+
+        button,
+        button.reset {
+            margin-top: 30px;
+            width: 20%;
+            background-color: #000000;
+            color: #ffffff;
+            padding: 15px 0;
+            font-size: 10px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            border: 1px solid #000000;
+        }
+        button:hover,
+        button.reset:hover {
+            margin-top: 30px;
+            width: 20%;
+            background-color: #eee7e7d3;
+            color: #0a0909e3;
+            padding: 15px 0;
+            font-size: 10px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            border: 1px solid #000000;
+        }
+
+        .show-password {
+            cursor: pointer;
+            font-size: 14px;
+            color: #2980b9;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .link-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .link-container a {
+            color: #000000;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .link-container a:hover {
+            text-decoration: underline;
+        }
+
+        .warning {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="post" action="{% url 'login' %}" onsubmit="return validateForm()">
+        {% csrf_token %}    
+        <h3>LOGIN HERE</h3>
+        <!--<label for="name">Name</label>
+        <input type="text" placeholder="Enter Your Name" id="name" name="name" required>-->
+
+        <!--<label for="mobile">Mobile Number</label>
+        <input type="tel" placeholder="Enter Mobile Number" id="mobile" name="mobile" pattern="[0-9]{10}" title="Please enter 10 digits" required>-->
+
+        <label for="email">UserID </label>
+        <input type="text" placeholder="Enter Username" id="email" name="email" required>
+        
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" id="password" name="pass" required>
+        <span class="show-password" onclick="togglePassword()">Show Password</span>
+        <div id="passwordWarning" class="warning"></div>
+
+        <!--<label for="confirm-password">Confirm Password</label>
+        <input type="password" placeholder="Confirm Password" id="confirm-password" name="confirm_pass" required>
+        <span class="show-password" onclick="toggleConfirmPassword()">Show Password</span>-->
+
+        <div class="button-container">
+            <button type="submit">Submit</button>
+            <button type="reset" class="reset">Reset</button>
+        </div>
+
+        <div class="link-container">
+            <a href="{% url 'create' %}">Create Account</a>
+        </div>
+    </form>
+
+    <script>
+        function validateForm() {
+            var emailInput = document.getElementById("email");
+            var passwordInput = document.getElementById("password");
+
+            // Validate email format
+            if (!emailInput.value.includes('@')) {
+                document.getElementById("emailWarning").innerHTML = "Please enter a valid email format.";
+                return false;
+            } else {
+                document.getElementById("emailWarning").innerHTML = "";
+            }
+
+            // Validate username format
+            if (!validateUsernameFormat(emailInput.value)) {
+                document.getElementById("usernameFormatWarning").innerHTML = "Username must contain the @ symbol.";
+                return false;
+            } else {
+                document.getElementById("usernameFormatWarning").innerHTML = "";
+            }
+
+            // Validate password format
+            if (!/(?=.\d)(?=.\W)/.test(passwordInput.value)) {
+                document.getElementById("passwordWarning").innerHTML = "Wrong Password";
+                return false;
+            } else {
+                document.getElementById("passwordWarning").innerHTML = "";
+            }
+
+            return true;
+        }
+
+        function validateUsernameFormat(username) {
+            // Custom function to validate username format (e.g., @gmail)
+            return username.includes('@');
+        }
+
+        function togglePassword() {
+            var passwordInput = document.getElementById("password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+
+        function toggleConfirmPassword() {
+        var confirmPasswordInput = document.getElementById("confirm-password");
+        if (confirmPasswordInput.type === "password") {
+            confirmPasswordInput.type = "text";
+        } else {
+            confirmPasswordInput.type = "password";
+        }
+    } 
+    </script>
+</body>
+
+</html>

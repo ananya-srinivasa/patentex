@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .form-container {
+            border: 2px solid #050506; /* Outline border */
+            border-radius: 0.5rem; /* Adjust as needed */
+            padding: 2rem;
+            max-width: 500px; /* Adjust as needed */
+            margin: 0 auto;
+        }
+        .form-input {
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem; /* 6px */
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .form-submit {
+            background-color: transparent;
+            color: #4f46e5;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem; /* 6px */
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid #4f46e5;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .form-submit:hover {
+            background-color: #4f46e5;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-700">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="form-container"> <!-- Add form-container class to wrap the form -->
+            <div class="max-w-md w-full space-y-8">
+                <div>
+                    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                        Organization Registration
+                    </h2>
+                    <p class="mt-2 text-center text-sm text-gray-600">
+                        Welcome to Patent App
+                    </p>
+                </div>
+                <form class="mt-8 space-y-6" action="{% url 'organisation' %}" method="POST">
+                    {% csrf_token %}
+
+                    <div>
+                        <label for="organization-name" class="form-label">Organization Name:</label>
+                        <input id="organization-name" name="organization-name" type="text" autocomplete="organization" required class="form-input" placeholder="Full name of the Organization">
+                    </div>
+                    <div>
+                        <label for="organization-type" class="form-label">Type of organization (optional):</label>
+                        <input id="organization-type" name="organization-type" type="text" class="form-input" placeholder="Full Name">
+                    </div>
+                    <div>
+                        <label for="address" class="form-label">Address:</label>
+                        <input id="address" name="address" type="text" required class="form-input" placeholder="Full Address">
+                    </div>
+                    <div>
+                        <label for="phone-number" class="form-label">Phone Number:</label>
+                        <input id="phone-number" name="phone-number" type="tel" required class="form-input" placeholder="0000000000">
+                    </div>
+                    <div>
+                        <label for="phone-number-2" class="form-label">Phone Number 2:</label>
+                        <input id="phone-number-2" name="phone-number-2" type="tel" class="form-input" placeholder="0000000000">
+                    </div>
+                    <div>
+                        <label for="email" class="form-label">E-Mail:</label>
+                        <input id="email" name="email" type="email" required class="form-input" placeholder="example@example.com">
+                    </div>
+                    <div>
+                        <label for="reg-no" class="form-label">Reg No:</label>
+                        <input id="reg-no" name="reg-no" type="text" required class="form-input">
+                    </div>
+                    <div>
+                        <label for="password" class="form-label">Create Password:</label>
+                        <input id="password" name="password" type="password" required class="form-input">
+                    </div>
+                    <div>
+                        <label for="confirm-password" class="form-label">Confirm Password:</label>
+                        <input id="confirm-password" name="confirm-password" type="password" required class="form-input">
+                    </div>
+                    <div>
+                        <button type="submit" class="form-submit">SUBMIT</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
